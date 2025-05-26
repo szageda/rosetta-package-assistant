@@ -109,6 +109,4 @@ ropa() {
       return 1
       ;;
   esac
-
-  return 0
 }
