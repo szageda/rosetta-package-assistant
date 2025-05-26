@@ -77,6 +77,19 @@ ropa() {
     -h|--help)
       print_help
       ;;
+    in|install)
+      case $2 in
+        # "ropa install" with no package name
+        "")
+          print_error "No package specified for installation."
+          return 1
+          ;;
+        *)
+          shift
+          system_package_install "$@"
+          ;;
+      esac
+      ;;
     up|update)
       case $2 in
         # "ropa update" with no option (equals to "--all" or "-a")
@@ -109,6 +122,4 @@ ropa() {
       return 1
       ;;
   esac
-
-  return 0
 }
