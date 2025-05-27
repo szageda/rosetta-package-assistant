@@ -64,5 +64,5 @@ universal_package_update() {
     print_warning "No universal package manager was found. Skipping updates."
   fi
 
-  return 0
+  return $?
 }

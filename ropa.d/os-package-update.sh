@@ -58,5 +58,5 @@ base_system_update() {
       ;;
   esac
 
-  return 0
+  return $?
 }

@@ -44,5 +44,5 @@ rust_package_update() {
     print_warning "Rust toolchain is not installed. Skipping updates."
   fi
 
-  return 0
+  return $?
 }
