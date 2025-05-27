@@ -19,30 +19,8 @@ system_package_install() {
 
   # Search for updates and install them if found
   case "$package_manager" in
-    apt)
-      sudo apt install "$@"
-
-      if [[ $? == "0" ]]; then
-        print_success "Package(s) installed to system successfully."
-      else
-        print_error "Package installation(s) failed."
-        print_error "Please check the output of your package manager for details."
-        return $?
-      fi
-      ;;
-    dnf)
-      sudo dnf install "$@"
-
-      if [[ $? == "0" ]]; then
-        print_success "Package(s) installed to system successfully."
-      else
-        print_error "Package installation(s) failed."
-        print_error "Please check the output of your package manager for details."
-        return $?
-      fi
-      ;;
-    zypper)
-      sudo zypper install "$@"
+    apt|dnf|zypper)
+      sudo "$package_manager" install "$@"
 
       if [[ $? == "0" ]]; then
         print_success "Package(s) installed to system successfully."
