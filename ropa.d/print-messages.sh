@@ -29,6 +29,7 @@ print_help() {
   echo -e "  \e[1;33min\e[0m, \e[1;33minstall\e[0m     Install package(s) to the operating system"
   echo -e "  \e[1;33mrm\e[0m, \e[1;33mremove\e[0m      Remove package(s) from the operating system"
   echo -e "  \e[1;33mup\e[0m, \e[1;33mupdate\e[0m      Perform package update(s) -- see Options"
+  echo -e "  \e[1;33msy\e[0m, \e[1;33msync\e[0m        Sync system package database with repositories"
   echo -e "  \e[1;33m-h\e[0m, \e[1;33m--help\e[0m      Display this message"
   echo -e "\n\e[1;37mOptions:"
   echo -e "  \e[0m('\e[1;33mup\e[0m' or '\e[1;33mupdate\e[0m')"
