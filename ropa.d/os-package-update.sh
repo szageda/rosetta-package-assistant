@@ -7,7 +7,7 @@
 # 
 # packag_manager is an environment variable that is set to the system's package
 # manager by identify_system_package_manager() in ropa.sh. If the variable is
-# not set, e.g., a  package manager is not identified, base_system_update()
+# not set, e.g., a package manager is not identified, base_system_update()
 # will not be run.
 #
 # Usage:
