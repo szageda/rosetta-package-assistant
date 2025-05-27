@@ -15,7 +15,7 @@
 #     ropa install|in <package>
 
 system_package_install() {
-  print_header "Attempting to install to system: $*"
+  print_action "Attempting to install to system: $*"
 
   # Search for updates and install them if found
   case "$package_manager" in
