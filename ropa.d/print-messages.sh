@@ -28,12 +28,12 @@ print_help() {
   echo -e "\n\e[1;37mCommands:"
   echo -e "  \e[1;33min\e[0m, \e[1;33minstall\e[0m     Install package(s) to the operating system"
   echo -e "  \e[1;33mup\e[0m, \e[1;33mupdate\e[0m      Perform package update(s) -- see Options"
-  echo -e "  \e[1;33m-h\e[0m, \e[1;33m--help\e[0m      Displays this message"
+  echo -e "  \e[1;33m-h\e[0m, \e[1;33m--help\e[0m      Display this message"
   echo -e "\n\e[1;37mOptions:"
   echo -e "  \e[0m('\e[1;33mup\e[0m' or '\e[1;33mupdate\e[0m')"
-  echo -e "  \e[1;34m-a\e[0m, \e[1;34m--all\e[0m       Perform full system update (option can also be omitted)"
-  echo -e "  \e[1;34m-u\e[0m, \e[1;34m--universal\e[0m Update universal package formats (Flatpaks, Snaps, etc.)"
-  echo -e "  \e[1;34m-r\e[0m, \e[1;34m--rust\e[0m      Update the Rust toolchain and Cargo packages"
+  echo -e "  \e[1;34m-a\e[0m, \e[1;34m--all\e[0m       Performs full system update (option can also be omitted)"
+  echo -e "  \e[1;34m-u\e[0m, \e[1;34m--universal\e[0m Updates universal package formats (Flatpaks, Snaps, etc.)"
+  echo -e "  \e[1;34m-r\e[0m, \e[1;34m--rust\e[0m      Updates the Rust toolchain and Cargo packages"
 
   return 0
 }
