@@ -27,6 +27,7 @@ print_help() {
   echo -e "\n\e[1;37mSyntax: \e[0mropa \e[0;33m[COMMAND...] \e[0;34m[OPTION...]"
   echo -e "\n\e[1;37mCommands:"
   echo -e "  \e[1;33min\e[0m, \e[1;33minstall\e[0m     Install package(s) to the operating system"
+  echo -e "  \e[1;33mrm\e[0m, \e[1;33mremove\e[0m      Remove package(s) from the operating system"
   echo -e "  \e[1;33mup\e[0m, \e[1;33mupdate\e[0m      Perform package update(s) -- see Options"
   echo -e "  \e[1;33m-h\e[0m, \e[1;33m--help\e[0m      Display this message"
   echo -e "\n\e[1;37mOptions:"
