@@ -18,9 +18,9 @@
 #
 # Syntax:
 #   ropa [COMMAND...] [OPTION...]
- 
+
 # LOAD THE ROPA ENVIRONMENT
-# 
+#
 # Important: ropa.sh must be in the same directory as ropa.d.
 
 ropa_dir="$(dirname "${BASH_SOURCE[0]}")/ropa.d"
@@ -70,7 +70,7 @@ ropa() {
   fi
 
   # Command and Option Parsing
-  # 
+  #
   # $1 = command
   # $2 = option
   case $1 in
@@ -87,6 +87,19 @@ ropa() {
         *)
           shift
           system_package_install "$@"
+          ;;
+      esac
+      ;;
+    rm|remove)
+      case $2 in
+        # "ropa remove" with no package name
+        "")
+          print_error "No package specified for removal."
+          return 1
+          ;;
+        *)
+          shift
+          system_package_remove "$@"
           ;;
       esac
       ;;
