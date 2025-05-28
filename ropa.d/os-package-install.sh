@@ -17,7 +17,6 @@
 system_package_install() {
   print_action "Attempting to install to system: $*"
 
-  # Search for updates and install them if found
   case "$package_manager" in
     apt|dnf|zypper)
       sudo "$package_manager" install "$@"
