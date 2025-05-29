@@ -77,7 +77,7 @@ ropa() {
       case "$option" in
         # Fail if no package name is specified.
         "")
-          print_error "No package specified for installation."
+          print_error "No package(s) specified for installation."
           return 1
           ;;
         *)
@@ -90,7 +90,7 @@ ropa() {
       case "$option" in
         # Fail if no package name is specified.
         "")
-          print_error "No package specified for removal."
+          print_error "No package(s) specified for removal."
           return 1
           ;;
         *)
@@ -101,28 +101,28 @@ ropa() {
       ;;
     up|update)
       case "$option" in
-        # Perform full system update if no option is specified for easier use.
-        # This behavior might change in the future.
-        "")
-          base_system_update && \
-          universal_package_update && \
-          rust_package_update
-          ;;
+        # Perform full system update.
         --all|-a)
-          base_system_update && \
+          system_package_update_full && \
           universal_package_update && \
           rust_package_update
           ;;
+        # Update universal packages only (e.g., Flatpak, Snap).
         --universal|-u)
           universal_package_update
           ;;
+        # Update the Rust toolchain and Cargo packages only.
         --rust|-r)
           rust_package_update
           ;;
+        # Update system packages only.
+        --system|-s)
+          system_package_update_full
+          ;;
         *)
-          print_error "Invalid option: $2"
-          print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
-          return 1
+        # Update individual packages.
+          shift
+          system_package_update_individual "$@"
           ;;
       esac
       ;;
