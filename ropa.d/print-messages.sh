@@ -22,7 +22,9 @@ print_error() {
 }
 
 print_help() {
-  echo -e "ROPA -- ROsetta Package Assistant -- is not a package manager. It acts as a unified front-end wrapper for GNU/Linux distributions providing a consistent and simplified command-line interface."
+  echo -e "ROPA -- ROsetta Package Assistant -- is NOT a package manager. It is a front-end"
+  echo -e "wrapper for GNU/Linux distributions providing a consistent and simplified"
+  echo -e "command-line interface."
   echo -e "\n\e[1;37mSyntax: \e[0mropa \e[0;33m[COMMAND...] \e[0;34m[OPTION...]"
   echo -e "\n\e[1;37mCommands:"
   echo -e "  \e[1;33min\e[0m, \e[1;33minstall\e[0m     Install package(s) to the operating system"
