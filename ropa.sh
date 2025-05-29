@@ -115,11 +115,12 @@ ropa() {
         --rust|-r)
           rust_package_update
           ;;
+        # Update system packages only.
         --system|-s)
-          # Update system packages only.
-          system_package_update
+          system_package_update_full
           ;;
         *)
+        # Update individual packages.
           shift
           system_package_update_individual "$@"
           ;;
