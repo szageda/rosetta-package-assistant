@@ -25,7 +25,7 @@ print_help() {
   echo -e "ROPA -- ROsetta Package Assistant -- is NOT a package manager. It is a front-end"
   echo -e "wrapper for GNU/Linux distributions providing a consistent and simplified"
   echo -e "command-line interface."
-  echo -e "\n\e[1;37mSyntax: \e[0mropa \e[0;33m[COMMAND...] \e[0;34m[OPTION...]"
+  echo -e "\n\e[1;37mSyntax: \e[0mropa \e[0;33m[COMMAND...] \e[0;34m[OPTION...] <package...>"
   echo -e "\n\e[1;37mCommands:"
   echo -e "  \e[1;33min\e[0m, \e[1;33minstall\e[0m     Install package(s) to the operating system"
   echo -e "  \e[1;33mrm\e[0m, \e[1;33mremove\e[0m      Remove package(s) from the operating system"
@@ -38,7 +38,7 @@ print_help() {
   echo -e "  \e[1;34m-r\e[0m, \e[1;34m--rust\e[0m      Updates the Rust toolchain and Cargo packages only"
   echo -e "  \e[1;34m-s\e[0m, \e[1;34m--system\e[0m    Updates the operating system only"
   echo -e "  \e[1;34m-u\e[0m, \e[1;34m--universal\e[0m Updates universal package formats (Flatpaks, Snaps, etc.) only"
-  echo -e "  \e[0m<\e[1;34mpackage\e[0m>       Updates a specific package or multiple packages"
+  echo -e "  \e[0m<\e[1;34mpackage...\e[0m>    Updates a specific package or multiple packages"
 
   return 0
 }
