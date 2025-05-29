@@ -10,10 +10,55 @@
 # base_system_update() will not be run.
 #
 # Usage:
-#   ropa update|up OR ropa update|up --all|-a
+#   ropa update|up <package> OR ropa update|up --all|-a
+#
+#
+# TODO:
+#   - It would be nice to combine the two functions into one.
 
-system_package_update() {
-  print_header "Updating Operating System Packages"
+# SINGLE OR MULTIPLE PACKAGE UPDATE FUNCTION
+
+system_package_update_individual() {
+  # Fail if no package was specified.
+  if [[ -z "$*" ]]; then
+    print_error "No package(s) specified for update."
+    return 1
+  else
+    print_action "Attempting to update: $*"
+
+    # Choose the package manager command to run based on 'package_manager'.
+    # After the command is run, the package manager's exit code is evaluated
+    # to check if the package update was successful.
+    case "$package_manager" in
+      apt|dnf)
+        sudo "$package_manager" upgrade -y "$@"
+
+        if [[ $? == "0" ]]; then
+          print_success "Package(s) updated successfully."
+        else
+          print_error "Package update(s) failed."
+          print_error "Please check the output of your package manager for details."
+        fi
+        ;;
+      zypper)
+        sudo zypper upgarde -y "$@"
+
+        if [[ $? == "0" ]]; then
+          print_success "Package(s) updated successfully."
+        else
+          print_error "Package update(s) failed."
+          print_error "Please check the output of your package manager for details."
+        fi
+        ;;
+    esac
+  fi
+  
+  return $?
+}
+
+# FULL SYSTEM UPDATE FUNCTION
+
+system_package_update_full() {
   print_action "Searching for system package updates..."
 
   # Choose the package manager command to run based on 'package_manager'.
