@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-# Print messages to the terminal
+# File        : print-messages.sh
+# Description : Functions for printing messages to the terminal (ROPA)
+# Copyright   : (c) 2025, Gergely Szabo
+# License     : MIT
 
 print_header() {
   echo -e "\n\e[1;35m:: \e[1;37m$1\e[0m" >&1
