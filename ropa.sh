@@ -12,17 +12,16 @@
 # package manager.
 #
 # Usage:
-#   Place ropa.sh and ropa.d in the same directory in your $PATH (for example:
-#   ~/.local/bin). Source ropa.sh in your ~/.bashrc or ~/.bash_profile to make
-#   it is available in your CLI.
+#   Source ropa.sh in your ~/.bashrc or ~/.bash_profile to make it available
+#   as a CLI command.
 #
 # Syntax:
 #   ropa [COMMAND...] [OPTION...]
 
 # LOAD THE ROPA ENVIRONMENT
-#
-# Important: ropa.sh must be in the same directory as ropa.d.
 
+# Load all files with .sh exentsion from the ropa.d directory. ropa.d is
+# expected to be in the same directory as this script.
 ropa_dir="$(dirname "${BASH_SOURCE[0]}")/ropa.d"
 for file in "$ropa_dir"/*.sh; do
   if [[ -f "$file" ]]; then
@@ -31,23 +30,19 @@ for file in "$ropa_dir"/*.sh; do
 done
 
 # SYSTEM PACKAGE MANAGER IDENTIFICATION
-#
-# This function identifies the system package manager by checking if a
-# compatiable package manager, declared in the array, is executable in
-# the system.
-# If a compatible package manager is found, it is saved in the variable
-# package_manager and exported globally as an environment variable.
 
 identify_system_package_manager() {
   declare -a package_managers=(apt dnf zypper)
   package_manager=""
 
-  # Iterate through the array of package managers
+  # Iterate through the array of package manager names to identify
+  # if a system package manager command is executable.
   for pm in "${package_managers[@]}"; do
     if command -v "$pm" &>/dev/null; then
+      # Save the package manager executable name to a variable,
+      # then export the variable as an environment variable,
+      # so it can be used by other functions and scripts.
       package_manager="$pm"
-
-      # Export the variable as an environment variable
       export package_manager
       break
     else
@@ -60,28 +55,29 @@ identify_system_package_manager() {
   return 0
 }
 
-# The Main Function
+# MAIN FUNCTION
 
+# This function exposes the ROPA command-line interface with command and option
+# parsing. It is the main entry point for the ROPA CLI.
 ropa() {
-  # Make sure a system package manager has been ID'ed
-  # before running any commands.
+  # Identify the system package manager before proceeding.
   if [[ -z "$package_manager" ]]; then
     identify_system_package_manager
   fi
 
   # Command and Option Parsing
-  #
-  # $1 = command
-  # $2 = option
-  case $1 in
+  command="$1"
+  option="$2"
+
+  case "$command" in
     -h|--help)
       print_help
       ;;
     in|install)
-      case $2 in
-        # "ropa install" with no package name
+      case "$option" in
+        # Fail if no package name is specified.
         "")
-          print_error "No package specified for installation."
+          print_error "No package(s) specified for installation."
           return 1
           ;;
         *)
@@ -91,10 +87,10 @@ ropa() {
       esac
       ;;
     rm|remove)
-      case $2 in
-        # "ropa remove" with no package name
+      case "$option" in
+        # Fail if no package name is specified.
         "")
-          print_error "No package specified for removal."
+          print_error "No package(s) specified for removal."
           return 1
           ;;
         *)
@@ -104,33 +100,35 @@ ropa() {
       esac
       ;;
     up|update)
-      case $2 in
-        # "ropa update" with no option (equals to "--all" or "-a")
-        "")
-          base_system_update && \
-          universal_package_update && \
-          rust_package_update
-          ;;
+      case "$option" in
+        # Perform full system update.
         --all|-a)
-          base_system_update && \
+          system_package_update_full && \
           universal_package_update && \
           rust_package_update
           ;;
+        # Update universal packages only (e.g., Flatpak, Snap).
         --universal|-u)
           universal_package_update
           ;;
+        # Update the Rust toolchain and Cargo packages only.
         --rust|-r)
           rust_package_update
           ;;
+        # Update system packages only.
+        --system|-s)
+          system_package_update_full
+          ;;
         *)
-          print_error "Invalid option: $2"
-          print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
-          return 1
+        # Update individual packages.
+          shift
+          system_package_update_individual "$@"
           ;;
       esac
       ;;
     sy|sync)
-      case $2 in
+      case "$option" in
+        # This command takes no options, so it must fail otherwise.
         "")
           system_package_sync
           ;;

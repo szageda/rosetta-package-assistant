@@ -4,22 +4,21 @@
 # Description : Module for updating universal package formats (ROPA)
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
-# 
-# The for-loop iterates through the array of universal package managers
-# supported by ROPA and checks if they are executable on the system. The
-# varible found_universal_pm keeps track of whether any universal package
-# manager was found (true). If a universal package manager is not found
-# (false), a warning message is printed.
+#
+# Update packages of universal package managers such as Snap and Flatpak.
 #
 # Usage:
-#   This function must be called from ropa() to be executed:
-#     ropa update|up --universal|-u
+#   ropa update|up --universal|-u
 
 universal_package_update() {
   declare -a universal_package_managers=(snap flatpak homebrew)
   found_universal_pm=false
 
-  # Iterate through the array of universal package managers
+  # Iterate through the array of package manager names first to identify
+  # if any of them are available on the system, and control the results
+  # with the 'found_universal_pm' variable -- this is important for the
+  # if-statement below the for-loop. Reasoning: if 'found_universal_pm'
+  # is false, the warning message is printed every time the for-loop iterates.
   for pm in "${universal_package_managers[@]}"; do
     if command -v "$pm" &>/dev/null; then
       found_universal_pm=true
@@ -34,7 +33,7 @@ universal_package_update() {
       if command -v flatpak &>/dev/null; then
         print_action "Searching for Flatpak updates..."
         if [[ $(flatpak update | tee /dev/null | wc -l) -gt 3 ]] && \
-          # Catch "end-of-life" runtime warnings
+          # Ignore "end-of-life" runtime warnings.
           flatpak update | grep -q '^Nothing to do.'; then
           print_success "No available Flatpak updates."
         else
