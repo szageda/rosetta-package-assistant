@@ -104,12 +104,12 @@ ropa() {
         # Perform full system update if no option is specified for easier use.
         # This behavior might change in the future.
         "")
-          base_system_update && \
+          system_system_update && \
           universal_package_update && \
           rust_package_update
           ;;
         --all|-a)
-          base_system_update && \
+          system_packge_update && \
           universal_package_update && \
           rust_package_update
           ;;

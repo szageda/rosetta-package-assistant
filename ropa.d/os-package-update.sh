@@ -12,7 +12,7 @@
 # Usage:
 #   ropa update|up OR ropa update|up --all|-a
 
-base_system_update() {
+system_package_update() {
   print_header "Updating Operating System Packages"
   print_action "Searching for system package updates..."
 
