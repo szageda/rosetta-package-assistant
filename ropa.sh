@@ -99,6 +99,19 @@ ropa() {
           ;;
       esac
       ;;
+    sy|sync)
+      case "$option" in
+        # This command takes no options, so it must fail otherwise.
+        "")
+          system_package_sync
+          ;;
+        *)
+          print_error "Invalid option: $2"
+          print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
+          return 1
+          ;;
+      esac
+    ;;
     up|update)
       case "$option" in
         # Perform full system update.
@@ -126,19 +139,7 @@ ropa() {
           ;;
       esac
       ;;
-    sy|sync)
-      case "$option" in
-        # This command takes no options, so it must fail otherwise.
-        "")
-          system_package_sync
-          ;;
-        *)
-          print_error "Invalid option: $2"
-          print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
-          return 1
-          ;;
-      esac
-    ;;
+
     *)
       print_error "Invalid command: $1"
       print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available commands."
