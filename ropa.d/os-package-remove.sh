@@ -5,19 +5,20 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 #
-# packag_manager is an environment variable that is set to the system's package
-# manager by identify_system_package_manager() in ropa.sh. If the variable is
-# not set, e.g., a package manager is not identified, system_package_remove()
-# will not be run.
+# 'package_manager' global environment variable (defined in ropa.sh) holds the
+# name of the system package manager executable. If the variable is emppty,
+# system_package_remove() will not be run.
 #
 # Usage:
-#   This function must be called from ropa() to be executed:
-#     ropa remove|rm <package>
+#   ropa remove|rm <package>
 
 system_package_remove() {
   print_action "Attempting to remove from system: $*"
 
-  # Search for updates and install them if found
+  # Choose the package manager command to run based on 'package_manager'.
+  # After the command is run, the package manager's exit code is evaluated to
+  # determine if the removal was successful. If it was, unused dependencies
+  # are cleaned up; otherwise, an error message is printed.
   case "$package_manager" in
     apt|dnf|zypper)
       sudo "$package_manager" remove "$@"

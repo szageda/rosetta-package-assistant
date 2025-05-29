@@ -5,19 +5,22 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 #
-# packag_manager is an environment variable that is set to the system's package
-# manager by identify_system_package_manager() in ropa.sh. If the variable is
-# not set, e.g., a package manager is not identified, system_package_sync()
-# will not be run.
+# 'package_manager' global environment variable (defined in ropa.sh) holds the
+# name of the system package manager executable. If the variable is emppty,
+# system_package_sync() will not be run.
 #
 # Usage:
-#   This function must be called from ropa() to be executed:
-#     ropa sync|sy
+#   ropa sync|sy
 
 system_package_sync() {
   print_header "Syncing Package Database with Remote Repositories"
   print_action "Cleaning local repository indices..."
 
+  # Choose the package manager command to run based on 'package_manager':
+  # First, delete the local repository index data. Secondly, download the
+  # fresh source repository index data, then evaluate the exit code to
+  # check if the download was successful. Prompt if the download failed or
+  # new updates are available.
   case "$package_manager" in
     apt)
       sudo apt clean &>/dev/null

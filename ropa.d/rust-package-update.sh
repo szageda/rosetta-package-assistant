@@ -4,15 +4,9 @@
 # Description : Module for updating the Rust toolchain & environment (ROPA)
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
-# 
-# The function checks if the Rust toolchain (rustup) is executable on the
-# system. If it is, it updates the toolchain, and subsequently checks for
-# the exectuability of Cargo, the Rust package manager. If Cargo is available,
-# it updates all installed Cargo packages.
 #
 # Usage:
-#   This function must be called from ropa() to be executed.
-#     ropa update|up --rust|-r
+#   ropa update|up --rust|-r
 
 rust_package_update() {
   if command -v rustup &>/dev/null; then

@@ -4,21 +4,22 @@
 # Description : Module for updating system packages (ROPA)
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
-# 
-# packag_manager is an environment variable that is set to the system's package
-# manager by identify_system_package_manager() in ropa.sh. If the variable is
-# not set, e.g., a package manager is not identified, base_system_update()
-# will not be run.
+#
+# 'package_manager' global environment variable (defined in ropa.sh) holds the
+# name of the system package manager executable. If the variable is emppty,
+# base_system_update() will not be run.
 #
 # Usage:
-#   This function must be called from ropa() to be executed:
-#     ropa update|up OR ropa update|up --all|-a
+#   ropa update|up OR ropa update|up --all|-a
 
 base_system_update() {
   print_header "Updating Operating System Packages"
   print_action "Searching for system package updates..."
 
-  # Search for updates and install them if found
+  # Choose the package manager command to run based on 'package_manager'.
+  # After the command is run, the output is evaluated to determine if
+  # there are any updates available. If there are, the updates are installed,
+  # and unsued packages are removed.
   case "$package_manager" in
     apt)
       sudo apt update &>/dev/null
