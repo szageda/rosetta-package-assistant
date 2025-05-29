@@ -13,7 +13,6 @@
 #   ropa sync|sy
 
 system_package_sync() {
-  print_header "Syncing Package Database with Remote Repositories"
   print_action "Cleaning local repository indices..."
 
   # Choose the package manager command to run based on 'package_manager':

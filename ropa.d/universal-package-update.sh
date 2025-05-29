@@ -22,7 +22,6 @@ universal_package_update() {
   for pm in "${universal_package_managers[@]}"; do
     if command -v "$pm" &>/dev/null; then
       found_universal_pm=true
-      print_header "Updating Universal Packages"
 
       if command -v snap &>/dev/null; then
         print_action "Searching for Snap updates..."

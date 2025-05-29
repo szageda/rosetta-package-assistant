@@ -5,10 +5,6 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 
-print_header() {
-  echo -e "\n\e[1;35m:: \e[1;37m$1\e[0m" >&1
-}
-
 print_action() {
   echo -e "\e[1;34m=> \e[1;37m$1\e[0m" >&1
 }
