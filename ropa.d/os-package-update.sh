@@ -10,7 +10,7 @@
 # base_system_update() will not be run.
 #
 # Usage:
-#   ropa update|up <package> OR ropa update|up --all|-a
+#   ropa update|up <package> OR ropa update|up --full|-f
 #
 #
 # TODO:
