@@ -111,7 +111,7 @@ ropa() {
           return 1
           ;;
       esac
-    ;;
+      ;;
     up|update)
       case "$option" in
         # Perform full system update.
@@ -139,7 +139,6 @@ ropa() {
           ;;
       esac
       ;;
-
     *)
       print_error "Invalid command: $1"
       print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available commands."
