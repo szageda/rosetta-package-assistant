@@ -16,7 +16,7 @@
 #   as a CLI command.
 #
 # Syntax:
-#   ropa [COMMAND...] [OPTION...]
+#   ropa [COMMAND...] [OPTION...] <package...>
 
 # LOAD THE ROPA ENVIRONMENT
 
