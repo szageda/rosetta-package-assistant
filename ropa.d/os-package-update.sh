@@ -16,13 +16,30 @@
 # TODO:
 #   - It would be nice to combine the two functions into one.
 
-# SINGLE OR MULTIPLE PACKAGE UPDATE FUNCTION
+# INDIVIDUAL PACKAGE UPDATE FUNCTION
 
-system_package_update_individual() {
-  # Fail if no package was specified.
+system_package_update() {
+  # If the user fails to specify package(s) to update,
+  # ask them what they want to do.
   if [[ -z "$*" ]]; then
     print_error "No package(s) specified for update."
-    return 1
+    print_warning "Do you want to update the operating system? [Y/n]"
+
+    read -r answer
+    case "$answer" in
+    # Default to Yes if the user presses Enter.
+      [Yy]|"")
+        system_package_update_full
+        ;;
+      [Nn])
+        print_error "Quitting."
+        return 1
+        ;;
+      *)
+        print_error "Invalid input. Aborting."
+        return 1
+        ;;
+    esac
   else
     print_action "Attempting to update: $*"
 
@@ -41,7 +58,7 @@ system_package_update_individual() {
         fi
         ;;
       zypper)
-        sudo zypper upgarde -y "$@"
+        sudo zypper update -y "$@"
 
         if [[ $? == "0" ]]; then
           print_success "Package(s) updated successfully."
@@ -52,7 +69,7 @@ system_package_update_individual() {
         ;;
     esac
   fi
-  
+
   return $?
 }
 

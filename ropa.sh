@@ -135,7 +135,7 @@ ropa() {
         *)
         # Update individual packages.
           shift
-          system_package_update_individual "$@"
+          system_package_update "$@"
           ;;
       esac
       ;;
