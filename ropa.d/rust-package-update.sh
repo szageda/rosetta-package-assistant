@@ -10,6 +10,7 @@
 
 rust_package_update() {
   if command -v rustup &>/dev/null; then
+    print_action "Searching for Rust toolchain updates..."
 
     if [[ $(rustup update 2>/dev/null | wc -l) -gt 3 ]]; then
       print_action "Updating Rust toolchain..."
