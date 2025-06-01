@@ -44,6 +44,10 @@ identify_system_package_manager() {
       # so it can be used by other functions and scripts.
       package_manager="$pm"
       export package_manager
+
+      # Break the loop once a valid package manager is found,
+      # since Linux distros typically use only one system package
+      # manager.
       break
     else
       print_error "A compatible package manager could not be identified."
