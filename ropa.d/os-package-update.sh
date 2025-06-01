@@ -24,10 +24,10 @@ system_package_update() {
   if [[ -z "$*" ]]; then
     print_error "No package(s) specified for update."
     print_warning "Do you want to update the operating system? [Y/n]"
-
     read -r answer
+
     case "$answer" in
-    # Default to Yes if the user presses Enter.
+      # Default to Yes if the user presses Enter.
       [Yy]|"")
         system_package_update_full
         ;;
