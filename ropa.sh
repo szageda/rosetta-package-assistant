@@ -132,8 +132,8 @@ ropa() {
         --system|-s)
           system_package_update_full
           ;;
-        *)
         # Update individual packages.
+        *)
           shift
           system_package_update "$@"
           ;;
