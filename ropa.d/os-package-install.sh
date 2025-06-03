@@ -5,7 +5,7 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 #
-# 'package_manager' global environment variable (defined in ropa.sh) holds the
+# 'PACKAGE_MANAGER' global environment variable (defined in ropa.sh) holds the
 # name of the system package manager executable. If the variable is emppty,
 # system_package_remove() will not be run.
 #
@@ -15,12 +15,12 @@
 system_package_install() {
   print_action "Attempting to install to system: $*"
 
-  # Choose the package manager command to run based on 'package_manager'.
+  # Choose the package manager command to run based on 'PACKAGE_MANAGER'.
   # After the command is run, the package manager's exit code is evaluated
   # to check if the installation was successful.
-  case "$package_manager" in
+  case "$PACKAGE_MANAGER" in
     apt|dnf|zypper)
-      sudo "$package_manager" install "$@"
+      sudo "$PACKAGE_MANAGER" install "$@"
 
       if [[ $? == "0" ]]; then
         print_success "Package(s) installed to system successfully."
