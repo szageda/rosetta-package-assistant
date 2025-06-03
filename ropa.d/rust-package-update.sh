@@ -10,6 +10,7 @@
 
 rust_package_update() {
   if command -v rustup &>/dev/null; then
+    print_action "Searching for Rust toolchain updates..."
 
     if [[ $(rustup update 2>/dev/null | wc -l) -gt 3 ]]; then
       print_action "Updating Rust toolchain..."
@@ -28,6 +29,10 @@ rust_package_update() {
       cargo install $(cargo install --list | \
       grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | \
       cut -f1 -d' ')
+      # Note: There is no way to properly catch and hide the output
+      # of "cargo install" in case of no available updates like with
+      # other type of package updates, so we just let the output
+      # print to the terminal.
       print_success "Cargo packages have been updated."
     else
       print_error "Cargo is not available: Cannot update packages."

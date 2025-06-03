@@ -5,7 +5,7 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 #
-# 'package_manager' global environment variable (defined in ropa.sh) holds the
+# 'PACKAGE_MANAGER' global environment variable (defined in ropa.sh) holds the
 # name of the system package manager executable. If the variable is emppty,
 # system_package_remove() will not be run.
 #
@@ -15,19 +15,19 @@
 system_package_remove() {
   print_action "Attempting to remove from system: $*"
 
-  # Choose the package manager command to run based on 'package_manager'.
+  # Choose the package manager command to run based on 'PACKAGE_MANAGER'.
   # After the command is run, the package manager's exit code is evaluated to
   # determine if the removal was successful. If it was, unused dependencies
   # are cleaned up; otherwise, an error message is printed.
-  case "$package_manager" in
+  case "$PACKAGE_MANAGER" in
     apt|dnf|zypper)
-      sudo "$package_manager" remove "$@"
+      sudo "$PACKAGE_MANAGER" remove "$@"
 
       if [[ $? == "0" ]]; then
         print_action "Cleaning up unused dependencies..."
-        case "$package_manager" in
+        case "$PACKAGE_MANAGER" in
           apt|dnf)
-            sudo "$package_manager" autoremove -y
+            sudo "$PACKAGE_MANAGER" autoremove -y
             ;;
           zypper)
             sudo zypper remove --clean-deps -y

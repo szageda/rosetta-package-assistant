@@ -16,7 +16,7 @@
 #   as a CLI command.
 #
 # Syntax:
-#   ropa [COMMAND...] [OPTION...]
+#   ropa [COMMAND...] [OPTION...] <package...>
 
 # LOAD THE ROPA ENVIRONMENT
 
@@ -31,9 +31,9 @@ done
 
 # SYSTEM PACKAGE MANAGER IDENTIFICATION
 
-identify_system_package_manager() {
+identify_system_PACKAGE_MANAGER() {
   declare -a package_managers=(apt dnf zypper)
-  package_manager=""
+  PACKAGE_MANAGER=""
 
   # Iterate through the array of package manager names to identify
   # if a system package manager command is executable.
@@ -42,8 +42,12 @@ identify_system_package_manager() {
       # Save the package manager executable name to a variable,
       # then export the variable as an environment variable,
       # so it can be used by other functions and scripts.
-      package_manager="$pm"
-      export package_manager
+      PACKAGE_MANAGER="$pm"
+      export PACKAGE_MANAGER
+
+      # Break the loop once a valid package manager is found,
+      # since Linux distros typically use only one system package
+      # manager.
       break
     else
       print_error "A compatible package manager could not be identified."
@@ -61,8 +65,8 @@ identify_system_package_manager() {
 # parsing. It is the main entry point for the ROPA CLI.
 ropa() {
   # Identify the system package manager before proceeding.
-  if [[ -z "$package_manager" ]]; then
-    identify_system_package_manager
+  if [[ -z "$PACKAGE_MANAGER" ]]; then
+    identify_system_PACKAGE_MANAGER
   fi
 
   # Command and Option Parsing
@@ -115,7 +119,7 @@ ropa() {
     up|update)
       case "$option" in
         # Perform full system update.
-        --all|-a)
+        --full|-f)
           system_package_update_full && \
           universal_package_update && \
           rust_package_update
@@ -132,10 +136,10 @@ ropa() {
         --system|-s)
           system_package_update_full
           ;;
-        *)
         # Update individual packages.
+        *)
           shift
-          system_package_update_individual "$@"
+          system_package_update "$@"
           ;;
       esac
       ;;

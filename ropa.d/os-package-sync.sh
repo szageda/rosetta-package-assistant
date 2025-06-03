@@ -5,7 +5,7 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 #
-# 'package_manager' global environment variable (defined in ropa.sh) holds the
+# 'PACKAGE_MANAGER' global environment variable (defined in ropa.sh) holds the
 # name of the system package manager executable. If the variable is emppty,
 # system_package_sync() will not be run.
 #
@@ -15,12 +15,12 @@
 system_package_sync() {
   print_action "Cleaning local repository indices..."
 
-  # Choose the package manager command to run based on 'package_manager':
+  # Choose the package manager command to run based on 'PACKAGE_MANAGER':
   # First, delete the local repository index data. Secondly, download the
   # fresh source repository index data, then evaluate the exit code to
   # check if the download was successful. Prompt if the download failed or
   # new updates are available.
-  case "$package_manager" in
+  case "$PACKAGE_MANAGER" in
     apt)
       sudo apt clean &>/dev/null
       print_success "Local repository indices have been cleaned."
