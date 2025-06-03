@@ -76,8 +76,6 @@ system_package_update() {
 # FULL SYSTEM UPDATE FUNCTION
 
 system_package_update_full() {
-  print_action "Searching for system package updates..."
-
   # Choose the package manager command to run based on 'PACKAGE_MANAGER'.
   # After the command is run, the output is evaluated to determine if
   # there are any updates available. If there are, the updates are installed,
@@ -85,6 +83,8 @@ system_package_update_full() {
   case "$PACKAGE_MANAGER" in
     apt)
       sudo apt update &>/dev/null
+      print_action "Searching for system package updates..."
+
       if [[ $(apt list --upgradable 2>/dev/null | wc -l) -gt 1 ]]; then
         print_action "Installing updates..."
         sudo apt upgrade -y
@@ -97,6 +97,8 @@ system_package_update_full() {
       ;;
     dnf)
       sudo dnf check-update &>/dev/null
+      print_action "Searching for system package updates..."
+
       if [[ $(dnf list updates 2>/dev/null | wc -l) -gt 1 ]]; then
         print_action "Installing updates..."
         sudo dnf upgrade -y
@@ -109,6 +111,8 @@ system_package_update_full() {
       ;;
     zypper)
       sudo zypper refresh &>/dev/null
+      print_action "Searching for system package updates..."
+
       if [[ $(zypper list-updates 2>/dev/null | wc -l) -gt 1 ]]; then
         print_action "Installing updates..."
         sudo zypper upgrade -y
