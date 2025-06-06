@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# File        : go-environment-update.sh
-# Description : Module for updating the Go developer environment (ROPA)
+# File        : go-package-update.sh
+# Description : Module for updating the Go developer toolchain (ROPA)
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 #

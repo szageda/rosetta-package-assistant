@@ -127,7 +127,7 @@ ropa() {
         # Update the Go toolchain only.
         # Note: EXPERINMENTAL FEATURE!
         --go|-g)
-          go_environment_update
+          go_package_update
           ;;
         # Update universal packages only (e.g., Flatpak, Snap).
         --universal|-u)
