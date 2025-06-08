@@ -34,6 +34,7 @@ print_help() {
   echo -e "  \e[1;33m-h\e[0m, \e[1;33m--help\e[0m      Display this message"
   echo -e "\n\e[1;37mOptions:"
   echo -e "  \e[1;34m-a\e[0m, \e[1;34m--all\e[0m       Perform full system \e[1;33mupdate\e[0m"
+  echo -e "  \e[1;34m-g\e[0m, \e[1;34m--go\e[0m        \e[1;33mUpdate\e[0m the Go toolchain only (experimental)"
   echo -e "  \e[1;34m-r\e[0m, \e[1;34m--rust\e[0m      \e[1;33mUpdate\e[0m the Rust toolchain and Cargo packages only"
   echo -e "  \e[1;34m-s\e[0m, \e[1;34m--system\e[0m    \e[1;33mUpdate\e[0m the operating system only"
   echo -e "  \e[1;34m-u\e[0m, \e[1;34m--universal\e[0m \e[1;33mUpdate\e[0m universal packages (Flatpaks, Snaps, etc.) only"
