@@ -122,7 +122,13 @@ ropa() {
         --full|-f)
           system_package_update_full && \
           universal_package_update && \
+          go_package_update && \
           rust_package_update
+          ;;
+        # Update the Go toolchain only.
+        # Note: EXPERINMENTAL FEATURE!
+        --go|-g)
+          go_package_update
           ;;
         # Update universal packages only (e.g., Flatpak, Snap).
         --universal|-u)
