@@ -13,8 +13,15 @@
 # Usage:
 #   ropa update|up --go|-g
 
-go_environment_update() {
+go_package_update() {
   if command -v go &>/dev/null; then
+
+    # Skip updates if Go is installed to /usr/local/ (officially recommended).
+    if [[ "$(command -v go)" == "/usr/local/go/bin/go" ]]; then
+      print_warning "Detected system-wide installation of Go toolchain. These are not supported right now, skipping updates."
+      return 0
+    fi
+
     print_action "Searching for Go toolchain updates..."
 
     # Initialize the Go environment variables.
@@ -35,10 +42,7 @@ go_environment_update() {
       fi
 
       # Remove current installation before installing new version.
-      if [[ -d "$GO_INSTALL_DIR/go" ]]; then
-        print_action "Removing existing Go installation..."
-        rm -rf "$GO_INSTALL_DIR/go" &>/dev/null
-      fi
+      rm -rf "$GO_INSTALL_DIR/go" &>/dev/null
 
       # Install the new Go version.
       tar -C "$GO_INSTALL_DIR" -xzf /tmp/go.tar.gz
@@ -46,7 +50,7 @@ go_environment_update() {
       if [[ $? == 0 ]]; then
         print_success "Go toolchain has been updated."
       else
-        print_error "Failed to install Go. Please check the output for details."
+        print_error "Failed to update Go. Please check the output for details."
         return 1
       fi
     fi
