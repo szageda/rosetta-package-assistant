@@ -31,7 +31,7 @@ universal_package_update() {
 
       if command -v flatpak &>/dev/null; then
         print_step "Searching for Flatpak updates..."
-        flatpak update -y | grep -v '^Looking for updates\…$'
+        flatpak update -y
         flatpak remove --unused -y
       fi
 
