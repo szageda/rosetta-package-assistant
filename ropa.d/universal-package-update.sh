@@ -43,7 +43,7 @@ universal_package_update() {
     fi
   done
 
-  if [[ "$found_universal_pm" = false ]]; then
+  if [[ "$found_universal_pm" == false ]]; then
     print_warn "No universal package manager was found. Skipping updates."
   fi
 
