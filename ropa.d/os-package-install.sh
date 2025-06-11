@@ -13,20 +13,14 @@
 #   ropa install|in <package>
 
 system_package_install() {
-  print_action "Attempting to install to system: $*"
-
-  # Choose the package manager command to run based on 'PACKAGE_MANAGER'.
-  # After the command is run, the package manager's exit code is evaluated
-  # to check if the installation was successful.
   case "$PACKAGE_MANAGER" in
     apt|dnf|zypper)
+      print_action "Attempting to install to system: $*"
       sudo "$PACKAGE_MANAGER" install "$@"
 
-      if [[ $? == "0" ]]; then
-        print_success "Package(s) installed to system successfully."
-      else
-        print_error "Package installation(s) failed."
-        print_error "Please check the output of your package manager for details."
+      if [[ $? != "0" ]]; then
+        print_err "There was an error while installing package(s)."
+        print_err "Please check the output of your package manager for details."
         return $?
       fi
       ;;
