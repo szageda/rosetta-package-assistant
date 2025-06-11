@@ -18,7 +18,9 @@
 # Syntax:
 #   ropa [COMMAND...] [OPTION...] <package...>
 
-# LOAD THE ROPA ENVIRONMENT
+##
+## LOAD THE ROPA ENVIRONMENT
+##
 
 # Load all files with .sh exentsion from the ropa.d directory. ropa.d is
 # expected to be in the same directory as this script.
@@ -29,7 +31,9 @@ for file in "$ropa_dir"/*.sh; do
   fi
 done
 
-# SYSTEM PACKAGE MANAGER IDENTIFICATION
+##
+## SYSTEM PACKAGE MANAGER IDENTIFICATION
+##
 
 identify_system_package_manager() {
   declare -a package_managers=(apt dnf zypper)
@@ -59,7 +63,9 @@ identify_system_package_manager() {
   return 0
 }
 
-# MAIN FUNCTION
+##
+## MAIN FUNCTION
+##
 
 # This function exposes the ROPA command-line interface with command and option
 # parsing. It is the main entry point for the ROPA CLI.
