@@ -5,8 +5,6 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 #
-# THIS FEATURE IS EXPERIMENTAL AND MAY NOT WORK AS EXPECTED!
-#
 # The script currently only supports non-root installations, for example: ~/go
 # or ~/.local/share/go.
 #

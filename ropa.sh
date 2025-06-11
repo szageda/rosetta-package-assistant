@@ -132,7 +132,6 @@ ropa() {
           rust_package_update
           ;;
         # Update the Go toolchain only.
-        # Note: EXPERINMENTAL FEATURE!
         --go|-g)
           go_package_update
           ;;
