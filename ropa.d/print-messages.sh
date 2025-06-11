@@ -9,7 +9,7 @@ print_step() {
   echo -e "\e[1;34m=> \e[1;37m$1\e[0m" >&1
 }
 
-print_msg() {
+print_info() {
   echo -e "\e[1;32m:: \e[1;37m$1\e[0m" >&1
 }
 
