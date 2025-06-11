@@ -31,7 +31,7 @@ done
 
 # SYSTEM PACKAGE MANAGER IDENTIFICATION
 
-identify_system_PACKAGE_MANAGER() {
+identify_system_package_manager() {
   declare -a package_managers=(apt dnf zypper)
   PACKAGE_MANAGER=""
 
@@ -66,7 +66,7 @@ identify_system_PACKAGE_MANAGER() {
 ropa() {
   # Identify the system package manager before proceeding.
   if [[ -z "$PACKAGE_MANAGER" ]]; then
-    identify_system_PACKAGE_MANAGER
+    identify_system_package_manager
   fi
 
   # Command and Option Parsing
