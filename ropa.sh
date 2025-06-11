@@ -50,8 +50,8 @@ identify_system_PACKAGE_MANAGER() {
       # manager.
       break
     else
-      print_error "A compatible package manager could not be identified."
-      print_error "Verify your package manager is in your PATH, and supported by ROPA."
+      print_err "A compatible package manager could not be identified."
+      print_err "Verify your package manager is in your PATH, and supported by ROPA."
       return 1
     fi
   done
@@ -75,13 +75,13 @@ ropa() {
 
   case "$command" in
     -h|--help)
-      print_help
+      help
       ;;
     in|install)
       case "$option" in
         # Fail if no package name is specified.
         "")
-          print_error "No package(s) specified for installation."
+          print_err "No package(s) specified for installation."
           return 1
           ;;
         *)
@@ -94,7 +94,7 @@ ropa() {
       case "$option" in
         # Fail if no package name is specified.
         "")
-          print_error "No package(s) specified for removal."
+          print_err "No package(s) specified for removal."
           return 1
           ;;
         *)
@@ -110,8 +110,8 @@ ropa() {
           system_package_sync
           ;;
         *)
-          print_error "Invalid option: $2"
-          print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
+          print_err "Invalid option: $2"
+          print_err "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
           return 1
           ;;
       esac
@@ -150,8 +150,8 @@ ropa() {
       esac
       ;;
     *)
-      print_error "Invalid command: $1"
-      print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available commands."
+      print_err "Invalid command: $1"
+      print_err "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available commands."
       return 1
       ;;
   esac
