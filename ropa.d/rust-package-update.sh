@@ -9,6 +9,11 @@
 #   ropa update|up --rust|-r
 
 rust_package_update() {
+  # Fail silenty if called via 'ropa update --full'.
+  if [[ "$option" == "--full" || "$option" == "-f" ]]; then
+    return 0
+  fi
+
   if command -v rustup &>/dev/null; then
     print_step "Searching for Rust toolchain updates..."
 
