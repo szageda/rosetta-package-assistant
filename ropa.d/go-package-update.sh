@@ -13,7 +13,8 @@
 
 go_package_update() {
   # Fail silenty if called via 'ropa update --full'.
-  if [[ "$option" == "--full" || "$option" == "-f" ]]; then
+  if [[ -z "$(command -v go)" && "$option" == "--full" ]] || \
+  [[ -z "$(command -v go)" && "$option" == "-f" ]]; then
     return 0
   fi
 
