@@ -32,12 +32,14 @@ universal_package_update() {
       if command -v flatpak &>/dev/null; then
         print_step "Searching for Flatpak updates..."
         flatpak update -y
+        print_step "Cleaning up..."
         flatpak remove --unused -y
       fi
 
       if command -v brew &>/dev/null; then
         print_step "Searching for Homebrew updates..."
         brew update
+        print_step "Cleaning up..."
         brew cleanup
       fi
     fi

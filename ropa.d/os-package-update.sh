@@ -81,6 +81,7 @@ system_package_update_full() {
       if [[ $(apt list --upgradable 2>/dev/null | wc -l) -gt 1 ]]; then
         print_step "Installing updates..."
         sudo apt upgrade -y
+        print_step "Cleaning up..."
         sudo apt autoremove -y
       else
         print_info "No available system updates."
@@ -93,6 +94,7 @@ system_package_update_full() {
       if [[ $(dnf list updates 2>/dev/null | wc -l) -gt 1 ]]; then
         print_step "Installing updates..."
         sudo dnf upgrade -y
+        print_step "Cleaning up..."
         sudo dnf autoremove -y
       else
         print_info "No available system updates."
@@ -105,6 +107,7 @@ system_package_update_full() {
       if [[ $(zypper list-updates 2>/dev/null | wc -l) -gt 1 ]]; then
         print_step "Installing updates..."
         sudo zypper upgrade -y
+        print_step "Cleaning up..."
         sudo zypper remove
       else
         print_info "No available system updates."
