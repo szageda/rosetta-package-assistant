@@ -16,14 +16,16 @@
 # TODO:
 #   - It would be nice to combine the two functions into one.
 
-# INDIVIDUAL PACKAGE UPDATE FUNCTION
+##
+## INDIVIDUAL PACKAGE UPDATE FUNCTION
+##
 
 system_package_update() {
   # If the user fails to specify package(s) to update,
   # ask them what they want to do.
   if [[ -z "$*" ]]; then
-    print_error "No package(s) specified for update."
-    print_warning "Do you want to update the operating system? [Y/n]"
+    print_err "No package(s) specified for update."
+    print_warn "Do you want to update the operating system? [Y/n]"
     read -r answer
 
     case "$answer" in
@@ -32,39 +34,32 @@ system_package_update() {
         system_package_update_full
         ;;
       [Nn])
-        print_error "Quitting."
+        print_err "Quitting."
         return 1
         ;;
       *)
-        print_error "Invalid input. Aborting."
+        print_err "Invalid input. Aborting."
         return 1
         ;;
     esac
   else
-    print_action "Attempting to update: $*"
+    print_step "Attempting to update: $*"
 
-    # Choose the package manager command to run based on 'PACKAGE_MANAGER'.
-    # After the command is run, the package manager's exit code is evaluated
-    # to check if the package update was successful.
     case "$PACKAGE_MANAGER" in
       apt|dnf)
         sudo "$PACKAGE_MANAGER" upgrade -y "$@"
 
-        if [[ $? == "0" ]]; then
-          print_success "Package(s) updated successfully."
-        else
-          print_error "Package update(s) failed."
-          print_error "Please check the output of your package manager for details."
+        if [[ $? != "0" ]]; then
+          print_err "Package update(s) failed."
+          print_err "Please check the output of your package manager for details."
         fi
         ;;
       zypper)
         sudo zypper update -y "$@"
 
-        if [[ $? == "0" ]]; then
-          print_success "Package(s) updated successfully."
-        else
-          print_error "Package update(s) failed."
-          print_error "Please check the output of your package manager for details."
+        if [[ $? != "0" ]]; then
+          print_err "Package update(s) failed."
+          print_err "Please check the output of your package manager for details."
         fi
         ;;
     esac
@@ -73,54 +68,49 @@ system_package_update() {
   return $?
 }
 
-# FULL SYSTEM UPDATE FUNCTION
+##
+## FULL SYSTEM UPDATE FUNCTION
+##
 
 system_package_update_full() {
-  # Choose the package manager command to run based on 'PACKAGE_MANAGER'.
-  # After the command is run, the output is evaluated to determine if
-  # there are any updates available. If there are, the updates are installed,
-  # and unsued packages are removed.
   case "$PACKAGE_MANAGER" in
     apt)
+      print_step "Searching for system package updates..."
       sudo apt update &>/dev/null
-      print_action "Searching for system package updates..."
 
       if [[ $(apt list --upgradable 2>/dev/null | wc -l) -gt 1 ]]; then
-        print_action "Installing updates..."
+        print_step "Installing updates..."
         sudo apt upgrade -y
-        print_action "Cleaning up packages..."
+        print_step "Cleaning up..."
         sudo apt autoremove -y
-        print_success "System packages have been updated."
       else
-        print_success "No available system updates."
+        print_info "No available system updates."
       fi
       ;;
     dnf)
-      sudo dnf check-update &>/dev/null
       print_action "Searching for system package updates..."
+      sudo dnf check-update &>/dev/null
 
       if [[ $(dnf list updates 2>/dev/null | wc -l) -gt 1 ]]; then
-        print_action "Installing updates..."
+        print_step "Installing updates..."
         sudo dnf upgrade -y
-        print_action "Cleaning up packages..."
+        print_step "Cleaning up..."
         sudo dnf autoremove -y
-        print_success "System packages have been updated."
       else
-        print_success "No available system updates."
+        print_info "No available system updates."
       fi
       ;;
     zypper)
+      print_step "Searching for system package updates..."
       sudo zypper refresh &>/dev/null
-      print_action "Searching for system package updates..."
 
       if [[ $(zypper list-updates 2>/dev/null | wc -l) -gt 1 ]]; then
-        print_action "Installing updates..."
+        print_step "Installing updates..."
         sudo zypper upgrade -y
-        print_action "Cleaning up packages..."
+        print_step "Cleaning up..."
         sudo zypper remove
-        print_success "System packages have been updated."
       else
-        print_success "No available system updates."
+        print_info "No available system updates."
       fi
       ;;
   esac

@@ -18,7 +18,9 @@
 # Syntax:
 #   ropa [COMMAND...] [OPTION...] <package...>
 
-# LOAD THE ROPA ENVIRONMENT
+##
+## LOAD THE ROPA ENVIRONMENT
+##
 
 # Load all files with .sh exentsion from the ropa.d directory. ropa.d is
 # expected to be in the same directory as this script.
@@ -29,9 +31,11 @@ for file in "$ropa_dir"/*.sh; do
   fi
 done
 
-# SYSTEM PACKAGE MANAGER IDENTIFICATION
+##
+## SYSTEM PACKAGE MANAGER IDENTIFICATION
+##
 
-identify_system_PACKAGE_MANAGER() {
+identify_system_package_manager() {
   declare -a package_managers=(apt dnf zypper)
   PACKAGE_MANAGER=""
 
@@ -50,8 +54,8 @@ identify_system_PACKAGE_MANAGER() {
       # manager.
       break
     else
-      print_error "A compatible package manager could not be identified."
-      print_error "Verify your package manager is in your PATH, and supported by ROPA."
+      print_err "A compatible package manager could not be identified."
+      print_err "Verify your package manager is in your PATH, and supported by ROPA."
       return 1
     fi
   done
@@ -59,14 +63,16 @@ identify_system_PACKAGE_MANAGER() {
   return 0
 }
 
-# MAIN FUNCTION
+##
+## MAIN FUNCTION
+##
 
 # This function exposes the ROPA command-line interface with command and option
 # parsing. It is the main entry point for the ROPA CLI.
 ropa() {
   # Identify the system package manager before proceeding.
   if [[ -z "$PACKAGE_MANAGER" ]]; then
-    identify_system_PACKAGE_MANAGER
+    identify_system_package_manager
   fi
 
   # Command and Option Parsing
@@ -75,13 +81,13 @@ ropa() {
 
   case "$command" in
     -h|--help)
-      print_help
+      help
       ;;
     in|install)
       case "$option" in
         # Fail if no package name is specified.
         "")
-          print_error "No package(s) specified for installation."
+          print_err "No package(s) specified for installation."
           return 1
           ;;
         *)
@@ -94,7 +100,7 @@ ropa() {
       case "$option" in
         # Fail if no package name is specified.
         "")
-          print_error "No package(s) specified for removal."
+          print_err "No package(s) specified for removal."
           return 1
           ;;
         *)
@@ -110,8 +116,8 @@ ropa() {
           system_package_sync
           ;;
         *)
-          print_error "Invalid option: $2"
-          print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
+          print_err "Invalid option: $2"
+          print_err "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available options."
           return 1
           ;;
       esac
@@ -126,7 +132,6 @@ ropa() {
           rust_package_update
           ;;
         # Update the Go toolchain only.
-        # Note: EXPERINMENTAL FEATURE!
         --go|-g)
           go_package_update
           ;;
@@ -150,8 +155,8 @@ ropa() {
       esac
       ;;
     *)
-      print_error "Invalid command: $1"
-      print_error "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available commands."
+      print_err "Invalid command: $1"
+      print_err "Use '\e[1;33m-h\e[1;37m' or '\e[1;33m--help\e[1;37m' for available commands."
       return 1
       ;;
   esac

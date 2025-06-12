@@ -31,7 +31,7 @@ source ~/.bashrc
 ## Usage & Syntax
 
 ```shell
-$ ropa [COMMAND...] [OPTION...]
+$ ropa [COMMAND...] [OPTION...] <package...>
 ```
 
 Run `ropa -h` or `ropa --help` to get a full overview of available commands and options.

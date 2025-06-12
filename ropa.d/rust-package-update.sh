@@ -9,19 +9,24 @@
 #   ropa update|up --rust|-r
 
 rust_package_update() {
+  # Fail silenty if called via 'ropa update --full'.
+  if [[ -z "$(command -v rustup)" && "$option" == "--full" ]] || \
+  [[ -z "$(command -v rustup)" && "$option" == "-f" ]]; then
+    return 0
+  fi
+
   if command -v rustup &>/dev/null; then
-    print_action "Searching for Rust toolchain updates..."
+    print_step "Searching for Rust toolchain updates..."
 
     if [[ $(rustup update 2>/dev/null | wc -l) -gt 3 ]]; then
-      print_action "Updating Rust toolchain..."
+      print_step "Installing updates..."
       rustup update
-      print_success "Rust toolchain has been updated."
     else
-      print_success "No available Rust toolchain updates."
+      print_info "No available Rust toolchain updates."
     fi
 
     if command -v cargo &>/dev/null; then
-      print_action "Updating Cargo packages..."
+      print_step "Searching for Cargo package updates..."
 
       # Vanilla Rust doesn't have a "cargo update" equivalent.
       # The method of updating installed packages is using
@@ -29,17 +34,12 @@ rust_package_update() {
       cargo install $(cargo install --list | \
       grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | \
       cut -f1 -d' ')
-      # Note: There is no way to properly catch and hide the output
-      # of "cargo install" in case of no available updates like with
-      # other type of package updates, so we just let the output
-      # print to the terminal.
-      print_success "Cargo packages have been updated."
     else
-      print_error "Cargo is not available: Cannot update packages."
+      print_err "Cargo is not available: Cannot update packages."
       return 1
     fi
   else
-    print_warning "Rust toolchain is not installed. Skipping updates."
+    print_warn "Rust toolchain is not installed. Skipping updates."
   fi
 
   return $?

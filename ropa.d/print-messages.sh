@@ -5,23 +5,23 @@
 # Copyright   : (c) 2025, Gergely Szabo
 # License     : MIT
 
-print_action() {
+print_step() {
   echo -e "\e[1;34m=> \e[1;37m$1\e[0m" >&1
 }
 
-print_success() {
+print_info() {
   echo -e "\e[1;32m:: \e[1;37m$1\e[0m" >&1
 }
 
-print_warning() {
+print_warn() {
   echo -e "\e[1;33m:: \e[1;37m$1\e[0m" >&1
 }
 
-print_error() {
+print_err() {
   echo -e "\e[1;31m:: \e[1;37m$1\e[0m" >&2
 }
 
-print_help() {
+help() {
   echo -e "ROPA -- ROsetta Package Assistant -- is NOT a package manager. It is a front-end"
   echo -e "wrapper for GNU/Linux distributions providing a consistent and simplified"
   echo -e "command-line interface."

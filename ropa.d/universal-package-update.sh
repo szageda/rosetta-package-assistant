@@ -24,42 +24,29 @@ universal_package_update() {
       found_universal_pm=true
 
       if command -v snap &>/dev/null; then
-        print_action "Searching for Snap updates..."
+        print_step "Searching for Snap updates..."
         sudo snap refresh
         echo "Snap packages are up-to-date."
       fi
 
       if command -v flatpak &>/dev/null; then
-        print_action "Searching for Flatpak updates..."
-        if [[ $(flatpak update | tee /dev/null | wc -l) -gt 3 ]] && \
-          # Ignore "end-of-life" runtime warnings.
-          flatpak update | grep -q '^Nothing to do.'; then
-          print_success "No available Flatpak updates."
-        else
-          print_action "Installing updates..."
-          flatpak update -y
-          print_action "Cleaning up packages..."
-          flatpak remove --unused -y
-          print_success "Flatpak packages have been updated."
-        fi
+        print_step "Searching for Flatpak updates..."
+        flatpak update -y
+        print_step "Cleaning up..."
+        flatpak remove --unused -y
       fi
 
       if command -v brew &>/dev/null; then
-        print_action "Searching for Homebrew updates..."
-        brew update 2>/dev/null
-        if [[ $(brew outdated --formula | wc -l) -gt 0 ]]; then
-          print_action "Cleaning up packages..."
-          brew cleanup
-          print_success "Homebrew packages have been updated."
-        else
-          print_success "No available Homebrew updates."
-        fi
+        print_step "Searching for Homebrew updates..."
+        brew update
+        print_step "Cleaning up..."
+        brew cleanup
       fi
     fi
   done
 
-  if [[ "$found_universal_pm" = false ]]; then
-    print_warning "No universal package manager was found. Skipping updates."
+  if [[ "$found_universal_pm" == false ]]; then
+    print_warn "No universal package manager was found. Skipping updates."
   fi
 
   return $?
