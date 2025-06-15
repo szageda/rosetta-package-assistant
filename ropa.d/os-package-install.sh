@@ -15,7 +15,7 @@
 system_package_install() {
   case "$PACKAGE_MANAGER" in
     apt|dnf|zypper)
-      print_action "Attempting to install to system: $*"
+      print_step "Attempting to install to system: $*"
       sudo "$PACKAGE_MANAGER" install "$@"
 
       if [[ $? != "0" ]]; then

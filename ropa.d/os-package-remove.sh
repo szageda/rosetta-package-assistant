@@ -15,7 +15,7 @@
 system_package_remove() {
   case "$PACKAGE_MANAGER" in
     apt|dnf|zypper)
-      print_action "Attempting to remove from system: $*"
+      print_step "Attempting to remove from system: $*"
       sudo "$PACKAGE_MANAGER" remove "$@"
 
       if [[ $? != "0" ]]; then
